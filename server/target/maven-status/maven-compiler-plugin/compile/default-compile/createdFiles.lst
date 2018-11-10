@@ -1,0 +1,13 @@
+com\rococo\springboot\Application.class
+com\rococo\springboot\model\User.class
+com\rococo\springboot\model\UserAbility.class
+com\rococo\springboot\Application$MyConfig.class
+com\rococo\springboot\repository\UserRepository.class
+com\rococo\springboot\service\UserService.class
+com\rococo\springboot\model\LoginModel.class
+com\rococo\springboot\controller\HomeController.class
+com\rococo\springboot\repository\UserAbilityRepository.class
+com\rococo\springboot\base\GlobalDefaultExceptionHandler.class
+com\rococo\springboot\base\ErrorDetails.class
+com\rococo\springboot\exception\UserNotFoundException.class
+com\rococo\springboot\service\UserServiceImpl.class
