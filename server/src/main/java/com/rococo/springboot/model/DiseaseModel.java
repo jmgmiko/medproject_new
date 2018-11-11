@@ -36,7 +36,7 @@ public class DiseaseModel implements Serializable {
         @NotNull
 	@NotEmpty
         @Size(min=1, message="List should at least have 1 medicine")
-        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="disease")
+        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MedicineModel> meds;
 
 	public Integer getId() {

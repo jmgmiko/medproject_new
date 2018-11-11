@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalIdCache;
+import org.hibernate.validator.constraints.Length;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name="medicine") // This tells Hibernate to name the table as Person and not PersonModel
@@ -26,7 +27,6 @@ public class MedicineModel implements Serializable {
 	private Integer id;
         
         @OneToMany(
-            mappedBy = "medicine",
             cascade = CascadeType.ALL,
             orphanRemoval = true
         )
@@ -34,8 +34,8 @@ public class MedicineModel implements Serializable {
 
 	@NotNull
 	@NotEmpty
-        @Size(min=1, message="Name should at least have 1 character")
-        @Size(max=30, message="Name should at least have 30 characters")
+        @Length(min=1, message="Name should at least have 1 character")
+        @Length(max=30, message="Name should at least have 30 characters")
         @Column(unique=true)
 	private String name;
         

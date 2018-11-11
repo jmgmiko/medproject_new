@@ -12,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
@@ -29,11 +31,11 @@ public class RecordMedicine implements Serializable {
     private RecordMedicineId id;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("medical_record")
+    @JoinColumn(name = "record_entity")
     private MedicalRecordModel record;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("medicine")
+    @JoinColumn(name = "med_entity")
     private MedicineModel med;
     
     @Column(name = "created_on")

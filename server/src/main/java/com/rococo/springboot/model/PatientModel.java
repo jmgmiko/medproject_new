@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name="patient") // This tells Hibernate to name the table as Person and not PersonModel
@@ -27,8 +28,8 @@ public class PatientModel implements Serializable {
 	@NotNull
 	@NotEmpty
         @Column(unique=true)
-        @Size(min=1, message="Name should at least have 1 character")
-        @Size(max=254, message="Name should at least have 254 characters")
+        @Length(min=1, message="Name should at least have 1 character")
+        @Length(max=254, message="Name should at least have 254 characters")
 	private String name;
         
         @NotNull

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -83,7 +84,7 @@ public class MedicalRecordModel implements Serializable {
         @NotNull
 	@NotEmpty
         @Size(min=1, message="List should at least have 1 symptom")
-        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="medical_record")
+        @ElementCollection
 	private List<String> symptoms;
         
         public List<String> getSymptoms() {
@@ -95,7 +96,6 @@ public class MedicalRecordModel implements Serializable {
         }
      
         @OneToMany(
-            mappedBy = "medical_record",
             cascade = CascadeType.ALL,
             orphanRemoval = true
         )

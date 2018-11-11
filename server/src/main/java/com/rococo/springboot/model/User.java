@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.validator.constraints.Length;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name = "user") // This tells Hibernate to name the table as user and not User
@@ -54,27 +55,27 @@ public class User implements Serializable {
 	private String email;
 
 	@NotEmpty
-	@Size(min = 2, message = "Username should at least have 2 characters")
-	@Size(max = 15, message = "Username should not exceed 15 characters")
+	@Length(min = 2, message = "Username should at least have 2 characters")
+	@Length(max = 15, message = "Username should not exceed 15 characters")
 	@Column(name = "username", nullable = false, updatable = false)
 	private String username;
 
 	@NotEmpty
-	@Size(min = 2, message = "Password should at least have 2 characters")
-	@Size(max = 15, message = "Password should not exceed 15 characters")
+	@Length(min = 2, message = "Password should at least have 2 characters")
+	@Length(max = 15, message = "Password should not exceed 15 characters")
 	@Column(name = "password", nullable = false, updatable = false)
 	private String password;
 
 	@NotNull
 	@NotEmpty
-	@Size(min = 2, message = "First Name should at least have 2 characters")
-	@Size(max = 15, message = "FirstName should not exceed 15 characters")
+	@Length(min = 2, message = "First Name should at least have 2 characters")
+	@Length(max = 15, message = "FirstName should not exceed 15 characters")
 	private String firstName;
 
 	@NotNull
 	@NotEmpty
-	@Size(min = 2, message = "Last Name should at least have 2 characters")
-	@Size(max = 15, message = "Last Name should not exceed 15 characters")
+	@Length(min = 2, message = "Last Name should at least have 2 characters")
+	@Length(max = 15, message = "Last Name should not exceed 15 characters")
 	private String lastName;
 
 	public Integer getId() {
