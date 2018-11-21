@@ -70,9 +70,7 @@ public class DiseaseModel implements Serializable {
                 result = false;
             } else {
                 DiseaseModel med = (DiseaseModel) object;
-                if (this.name.equals(med.getName())) {
-                    result = true;
-                }
+                return this.name.equals(med.getName())&&this.meds.equals(med.getMeds());
             }
             return result;
         }

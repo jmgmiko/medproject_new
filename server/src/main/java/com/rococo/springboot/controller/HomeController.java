@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rococo.springboot.model.LoginModel;
 import com.rococo.springboot.model.User;
 import com.rococo.springboot.service.UserServiceImpl;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author Anthony
@@ -56,7 +58,7 @@ public class HomeController {
 
 	}
 
-	@PostMapping(value = "/register") // Map ONLY POST Requests
+	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE) // Map ONLY POST Requests
 	public @ResponseBody String register(@Valid @RequestBody User person) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request

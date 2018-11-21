@@ -17,7 +17,7 @@ public class PatientServiceImpl implements PatientService {
 	private PatientRepository patientRepository;
 
 	@Override
-	public PatientModel getPersonInfo(PatientModel patientModel) {
+	public PatientModel getPatientInfo(PatientModel patientModel) {
 		return patientRepository.findById(patientModel.getId()).get();
 	}
 
@@ -32,7 +32,7 @@ public class PatientServiceImpl implements PatientService {
 	 * @see com.rococo.springboot.service.PersonService#registerPerson(com.rococo.springboot.model.PatientModel)
 	 */
 	@Override
-	public void registerPerson(PatientModel patientModel) {
+	public void registerPatient(PatientModel patientModel) {
 		patientRepository.save(patientModel);
 	}
 

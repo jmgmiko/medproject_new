@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rococo.springboot.model.User;
+import com.rococo.springboot.model.UserAbility;
 import com.rococo.springboot.repository.UserAbilityRepository;
 import com.rococo.springboot.repository.UserRepository;
 
@@ -25,9 +26,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getPersonInfo(User UserModel) {
 		return userRepository.findById(UserModel.getId()).get();
-	}
-
-	
+        }
 
 	@Override
 	@Transactional(rollbackOn = Exception.class)
@@ -42,13 +41,14 @@ public class UserServiceImpl implements UserService {
 		userRepository.findAll().iterator().forEachRemaining(list::add);
 		return list;
 	}
-
+        
 	/* (non-Javadoc)
 	 * @see com.rococo.springboot.service.UserService#registerPerson(com.rococo.springboot.model.User)
 	 */
 	@Override
 	public void registerPerson(User UserModel) {
 		userRepository.save(UserModel);
+                userAbilityRepository.save(new UserAbility(UserModel, "doctor"));
 	}
 
 }
