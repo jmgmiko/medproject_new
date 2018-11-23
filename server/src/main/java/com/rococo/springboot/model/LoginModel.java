@@ -3,6 +3,7 @@ package com.rococo.springboot.model;
 public class LoginModel {
 	private String username;
 	private String password;
+        private String role;
 
 	public String getUsername() {
 		return username;
@@ -20,10 +21,19 @@ public class LoginModel {
 		this.password = password;
 	}
 
-	public LoginModel(String username, String password) {
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }                
+
+	public LoginModel(String username, String password, String role) {
 		super();
 		this.username = username;
 		this.password = password;
+                this.role = role;
 	}
 
 }

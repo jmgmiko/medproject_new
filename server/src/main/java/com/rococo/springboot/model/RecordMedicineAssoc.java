@@ -26,7 +26,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity // This tells Hibernate to make a table out of this class
 @Table(name="disease_medicine") // This tells Hibernate to name the table as Person and not PersonModel
-public class RecordMedicine implements Serializable {
+public class RecordMedicineAssoc implements Serializable {
     @EmbeddedId
     private RecordMedicineId id;
     
@@ -45,7 +45,7 @@ public class RecordMedicine implements Serializable {
     @NotNull
     private Integer count;
 
-    public RecordMedicine(MedicalRecordModel record, MedicineModel med) {
+    public RecordMedicineAssoc(MedicalRecordModel record, MedicineModel med) {
         this.record = record;
         this.med = med;
         this.id = new RecordMedicineId(record.getId(), med.getId());
@@ -90,7 +90,7 @@ public class RecordMedicine implements Serializable {
         if (o == null || getClass() != o.getClass()) 
             return false;
  
-        RecordMedicine that = (RecordMedicine) o;
+        RecordMedicineAssoc that = (RecordMedicineAssoc) o;
         return Objects.equals(record, that.record) && 
                Objects.equals(med, that.med);
     }

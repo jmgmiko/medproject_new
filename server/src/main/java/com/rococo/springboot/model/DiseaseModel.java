@@ -1,6 +1,7 @@
 package com.rococo.springboot.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +39,16 @@ public class DiseaseModel implements Serializable {
         @Size(min=1, message="List should at least have 1 medicine")
         @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MedicineModel> meds;
+        
+        @Column(name = "creation", updatable=false)
+        private Date creationDate = new Date();
+        
+        @Column(name = "modification")
+        private Date modificationDate = new Date();
+        
+        @NotNull
+	@NotEmpty
+        private Integer key;
 
 	public Integer getId() {
 		return id;
@@ -74,11 +85,37 @@ public class DiseaseModel implements Serializable {
             }
             return result;
         }
-
+        
         @Override
         public int hashCode() {
             int hash = 5;
             hash = 83 * hash + Objects.hashCode(this.name);
             return hash;
         }
+
+        public Date getCreationDate() {
+            return creationDate;
+        }
+
+        public void setCreationDate(Date creationDate) {
+            this.creationDate = creationDate;
+        }
+
+        public Date getModificationDate() {
+            return modificationDate;
+        }
+
+        public void setModificationDate(Date modificationDate) {
+            this.modificationDate = modificationDate;
+        }
+
+        public Integer getKey() {
+            return key;
+        }
+
+        public void setKey() {
+            this.key = this.hashCode();
+        }
+        
+        
 }

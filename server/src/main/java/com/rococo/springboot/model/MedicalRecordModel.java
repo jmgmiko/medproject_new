@@ -99,18 +99,18 @@ public class MedicalRecordModel implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
         )
-        private List<RecordMedicine> medicine;
+        private List<RecordMedicineAssoc> medicine;
         
         public void addMedicine(MedicineModel med) {
-            RecordMedicine give = new RecordMedicine(this, med);
+            RecordMedicineAssoc give = new RecordMedicineAssoc(this, med);
             medicine.add(give);
             med.getRecords().add(give);
         }
 
         public void removeTag(MedicineModel med) {
-            for (Iterator<RecordMedicine> iterator = medicine.iterator(); 
+            for (Iterator<RecordMedicineAssoc> iterator = medicine.iterator(); 
                  iterator.hasNext(); ) {
-                RecordMedicine some = iterator.next();
+                RecordMedicineAssoc some = iterator.next();
 
                 if (some.getMed().equals(med) &&
                         some.getRecord().equals(this)) {
@@ -122,7 +122,7 @@ public class MedicalRecordModel implements Serializable {
             }
         }
 
-        public List<RecordMedicine> getMedicine() {
+        public List<RecordMedicineAssoc> getMedicine() {
             return medicine;
         }     
         
@@ -133,9 +133,46 @@ public class MedicalRecordModel implements Serializable {
             MedicalRecordModel record = (MedicalRecordModel) o;
             return Objects.equals(id, record.id) && Objects.equals(symptoms, record.getSymptoms()) && Objects.equals(total, record.total) && Objects.equals(patient, record.patient) && Objects.equals(dischargeDate, record.dischargeDate) && Objects.equals(admissionDate, record.admissionDate);
         }
+        
+        @NotNull
+	@NotEmpty
+        private Integer key;
 
         @Override
         public int hashCode() {
             return Objects.hash(id, total, patient, admissionDate, dischargeDate, medicine, symptoms);
         }
+
+        public Integer getKey() {
+            return key;
+        }
+
+        public void setKey() {
+            this.key = this.hashCode();
+        }
+        
+        @Column(name = "creation", updatable=false)
+        private Date creationDate = new Date();
+
+        public Date getCreationDate() {
+            return creationDate;
+        }
+
+        public void setCreationDate(Date creationDate) {
+            this.creationDate = creationDate;
+        }       
+        
+        @Column(name = "modification")
+        private Date modificationDate = new Date();
+
+        public Date getModificationDate() {
+            return modificationDate;
+        }
+
+        public void setModificationDate(Date modificationDate) {
+            this.modificationDate = modificationDate;
+        }
+        
+        
 }
+

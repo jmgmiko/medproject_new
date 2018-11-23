@@ -1,6 +1,7 @@
 package com.rococo.springboot.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -13,10 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.NaturalIdCache;
 import org.hibernate.validator.constraints.Length;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -30,7 +27,7 @@ public class MedicineModel implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
         )
-        private List<RecordMedicine> records;
+        private List<RecordMedicineAssoc> records;
 
 	@NotNull
 	@NotEmpty
@@ -44,6 +41,16 @@ public class MedicineModel implements Serializable {
         private double price;
 
 	private String manuf;
+        
+        @NotNull
+	@NotEmpty
+        private Integer key;
+        
+        @Column(name = "creation", updatable=false)
+        private Date creationDate = new Date();
+        
+        @Column(name = "modification")
+        private Date modificationDate = new Date();
 
         public Integer getId() {
             return id;
@@ -77,11 +84,11 @@ public class MedicineModel implements Serializable {
             this.price = price;
         }
 
-        public List<RecordMedicine> getRecords() {
+        public List<RecordMedicineAssoc> getRecords() {
             return records;
         }
 
-        public void setRecords(List<RecordMedicine> records) {
+        public void setRecords(List<RecordMedicineAssoc> records) {
             this.records = records;
         } 
         
@@ -96,8 +103,8 @@ public class MedicineModel implements Serializable {
                         &&this.price==med.getPrice()&&this.records.equals(med.getRecords());
             }
             return result;
-        }
-
+        }        
+        
         @Override
         public int hashCode() {
             int hash = 5;
@@ -106,5 +113,30 @@ public class MedicineModel implements Serializable {
             hash = 83 * hash + Objects.hashCode(this.manuf);
             return hash;
         }
+
+        public Integer getKey() {
+            return key;
+        }
+
+        public void setKey() {
+            this.key = this.hashCode();
+        }
+
+        public Date getCreationDate() {
+            return creationDate;
+        }
+
+        public void setCreationDate(Date creationDate) {
+            this.creationDate = creationDate;
+        }
+
+        public Date getModificationDate() {
+            return modificationDate;
+        }
+
+        public void setModificationDate(Date modificationDate) {
+            this.modificationDate = modificationDate;
+        }
+        
         
 }

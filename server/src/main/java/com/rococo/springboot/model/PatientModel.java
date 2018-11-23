@@ -3,6 +3,7 @@ package com.rococo.springboot.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class PatientModel implements Serializable {
         @Column(unique=true)
         @Length(min=1, message="Name should at least have 1 character")
         @Length(max=254, message="Name should at least have 254 characters")
-	private String name;
+	private String name;        
         
         @NotNull
         @NotEmpty
@@ -41,6 +42,16 @@ public class PatientModel implements Serializable {
         @NotNull
         @NotEmpty
 	private String sex;
+        
+        @NotNull
+	@NotEmpty
+        private Integer key;
+        
+        @Column(name = "creation", updatable=false)
+        private Date creationDate = new Date();
+        
+        @Column(name = "modification")
+        private Date modificationDate = new Date();
 
         public Integer getId() {
             return id;
@@ -74,7 +85,33 @@ public class PatientModel implements Serializable {
             this.sex = sex;
         }
         
-        
-        
-        
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, name, birth, sex);
+        }
+
+        public Integer getKey() {
+            return key;
+        }
+
+        public void setKey() {
+            this.key = this.hashCode();
+        }
+
+        public Date getCreationDate() {
+            return creationDate;
+        }
+
+        public void setCreationDate(Date creationDate) {
+            this.creationDate = creationDate;
+        }
+
+        public Date getModificationDate() {
+            return modificationDate;
+        }
+
+        public void setModificationDate(Date modificationDate) {
+            this.modificationDate = modificationDate;
+        }      
+                
 }

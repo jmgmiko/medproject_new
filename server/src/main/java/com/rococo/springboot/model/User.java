@@ -1,6 +1,8 @@
 package com.rococo.springboot.model;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -77,6 +79,16 @@ public class User implements Serializable {
 	@Length(min = 2, message = "Last Name should at least have 2 characters")
 	@Length(max = 15, message = "Last Name should not exceed 15 characters")
 	private String lastName;
+        
+        @Column(name = "creation", updatable=false)
+        private Date creationDate = new Date();
+        
+        @Column(name = "modification")
+        private Date modificationDate = new Date();
+        
+        @NotNull
+	@NotEmpty
+        private Integer key;
 
 	public Integer getId() {
 		return id;
@@ -125,7 +137,35 @@ public class User implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+        
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, email, username, password, firstName, lastName);
+        }
 
+        public Date getCreationDate() {
+            return creationDate;
+        }
+
+        public void setCreationDate(Date creationDate) {
+            this.creationDate = creationDate;
+        }
+
+        public Date getModificationDate() {
+            return modificationDate;
+        }
+
+        public void setModificationDate(Date modificationDate) {
+            this.modificationDate = modificationDate;
+        }
+
+        public Integer getKey() {
+            return key;
+        }
+
+        public void setKey() {
+            this.key = this.hashCode();
+        }
         
         
 }
