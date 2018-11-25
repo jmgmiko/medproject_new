@@ -9,7 +9,9 @@ package com.rococo.springboot.controller;
  *
  * @author staff
  */
+import com.rococo.springboot.model.DiseaseModel;
 import com.rococo.springboot.model.MedicalRecordModel;
+import com.rococo.springboot.model.MedicineModel;
 import com.rococo.springboot.service.MedicalRecordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,9 +41,15 @@ public class MedicalRecordController {
         return "Saved";
     }
     
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String updateRecord(@RequestBody MedicalRecordModel given) {
+        medicine.updateMedicine(given);
+        return "Updated";
+    }
+    
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String deleteById(@RequestBody MedicalRecordModel given){
-        medicine.removeMedicine(given);
+        medicine.removeMedicalRecordInfo(given);
         return given.getId()+" deleted";
     }
        

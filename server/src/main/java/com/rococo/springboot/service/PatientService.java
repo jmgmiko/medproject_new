@@ -6,7 +6,7 @@ import com.rococo.springboot.model.PatientModel;
 
 public interface PatientService {
 	
-	public PatientModel getPatientInfo(PatientModel patientModel);	
+	public PatientModel getPatientInfo(int given);	
 	public List<PatientModel> getAll();
 	public void registerPatient(PatientModel patientModel);
 }

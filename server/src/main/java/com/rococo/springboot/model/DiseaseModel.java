@@ -16,6 +16,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalIdCache;
@@ -41,9 +44,11 @@ public class DiseaseModel implements Serializable {
 	private List<MedicineModel> meds;
         
         @Column(name = "creation", updatable=false)
+        @Temporal(javax.persistence.TemporalType.DATE)
         private Date creationDate = new Date();
         
         @Column(name = "modification")
+        @Temporal(javax.persistence.TemporalType.DATE)
         private Date modificationDate = new Date();
         
         @NotNull
@@ -71,7 +76,8 @@ public class DiseaseModel implements Serializable {
         }
 
         public void setMeds(List<MedicineModel> meds) {
-            this.meds = meds;
+            this.meds.retainAll(meds);
+            this.meds.addAll(meds);
         }
 
         @Override
@@ -117,5 +123,14 @@ public class DiseaseModel implements Serializable {
             this.key = this.hashCode();
         }
         
-        
+        @PrePersist
+	protected void onCreate() {
+		this.setCreationDate(new Date());
+	}
+
+	@PreUpdate
+	protected void onPersist() {
+		this.setModificationDate(new Date());
+                this.setKey();
+	}
 }

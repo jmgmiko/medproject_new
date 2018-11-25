@@ -9,8 +9,8 @@ package com.rococo.springboot.controller;
  *
  * @author staff
  */
-import com.rococo.springboot.model.MedicineModel;
-import com.rococo.springboot.service.MedicineServiceImpl;
+import com.rococo.springboot.model.PatientModel;
+import com.rococo.springboot.service.PatientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,38 +26,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
  
 @RestController
-@RequestMapping("/medicine")
+@RequestMapping("/patient")
 @CrossOrigin(value = "http://localhost:4200/")
-public class MedicineController {
+public class PatientController {
     @Autowired
-    MedicineServiceImpl medicine;
+    PatientServiceImpl medicine;
     
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String saveMed(@RequestBody MedicineModel given) {
-        medicine.registerMedicine(given);
-        return "Saved";
-    }
-    
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String updateMed(@RequestBody MedicineModel given) {
-        medicine.registerMedicine(given);
+    public String saveUser(@RequestBody PatientModel given) {
+        medicine.registerPatient(given);
         return "Saved";
     }
     
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String deleteById(@RequestBody MedicineModel given){
-        medicine.removeMedicine(given);
+    public String deleteById(@RequestBody PatientModel given){
+        medicine.removePatientById(given);
         return given.getId()+" deleted";
     }
     
     @RequestMapping(method = RequestMethod.GET)
-    public MedicineModel findByName(@RequestParam("name") String given){
-        return medicine.getByName(given);
+    public PatientModel findPatientById(@RequestParam("id") int given){
+        return medicine.getPatientInfo(given);
     }
        
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public Collection<MedicineModel> findAll(){
-        return (Collection<MedicineModel>) medicine.getAll();
+    public Collection<PatientModel> findAll(){
+        return (Collection<PatientModel>) medicine.getAll();
     }
        
 }

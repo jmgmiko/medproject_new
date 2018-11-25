@@ -8,6 +8,7 @@ package com.rococo.springboot.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -16,7 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -30,15 +34,16 @@ public class RecordMedicineAssoc implements Serializable {
     @EmbeddedId
     private RecordMedicineId id;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "record_entity")
     private MedicalRecordModel record;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "med_entity")
     private MedicineModel med;
     
     @Column(name = "created_on")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date createdOn = new Date();
     
     @NotEmpty
@@ -48,6 +53,7 @@ public class RecordMedicineAssoc implements Serializable {
     public RecordMedicineAssoc(MedicalRecordModel record, MedicineModel med) {
         this.record = record;
         this.med = med;
+        this.count = 0;
         this.id = new RecordMedicineId(record.getId(), med.getId());
     }
 

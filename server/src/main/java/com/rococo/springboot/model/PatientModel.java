@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,9 +50,11 @@ public class PatientModel implements Serializable {
         private Integer key;
         
         @Column(name = "creation", updatable=false)
+        @Temporal(javax.persistence.TemporalType.DATE)
         private Date creationDate = new Date();
         
         @Column(name = "modification")
+        @Temporal(javax.persistence.TemporalType.DATE)
         private Date modificationDate = new Date();
 
         public Integer getId() {
@@ -113,5 +117,10 @@ public class PatientModel implements Serializable {
         public void setModificationDate(Date modificationDate) {
             this.modificationDate = modificationDate;
         }      
+
+	@PreUpdate
+	protected void onPersist() {
+		this.setModificationDate(new Date());
+	}
                 
 }

@@ -11,7 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
@@ -23,11 +26,11 @@ public class MedicineModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
         
-        @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-        )
-        private List<RecordMedicineAssoc> records;
+//        @OneToMany(
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//        )
+//        private List<RecordMedicineAssoc> records;
 
 	@NotNull
 	@NotEmpty
@@ -47,10 +50,12 @@ public class MedicineModel implements Serializable {
         private Integer key;
         
         @Column(name = "creation", updatable=false)
+        @Temporal(javax.persistence.TemporalType.DATE)
         private Date creationDate = new Date();
         
         @Column(name = "modification")
-        private Date modificationDate = new Date();
+        @Temporal(javax.persistence.TemporalType.DATE)
+        private Date modificationDate;
 
         public Integer getId() {
             return id;
@@ -84,13 +89,13 @@ public class MedicineModel implements Serializable {
             this.price = price;
         }
 
-        public List<RecordMedicineAssoc> getRecords() {
-            return records;
-        }
-
-        public void setRecords(List<RecordMedicineAssoc> records) {
-            this.records = records;
-        } 
+//        public List<RecordMedicineAssoc> getRecords() {
+//            return records;
+//        }
+//
+//        public void setRecords(List<RecordMedicineAssoc> records) {
+//            this.records = records;
+//        } 
         
         @Override
         public boolean equals (Object object) {
@@ -100,7 +105,7 @@ public class MedicineModel implements Serializable {
             } else {
                 MedicineModel med = (MedicineModel) object;
                 return this.name.equals(med.getName())&&this.manuf.equals(med.getManuf())
-                        &&this.price==med.getPrice()&&this.records.equals(med.getRecords());
+                        &&this.price==med.getPrice();
             }
             return result;
         }        
@@ -137,6 +142,12 @@ public class MedicineModel implements Serializable {
         public void setModificationDate(Date modificationDate) {
             this.modificationDate = modificationDate;
         }
+
+	@PreUpdate
+	protected void onPersist() {
+		this.setModificationDate(new Date());
+                this.setKey();
+	}
         
         
 }

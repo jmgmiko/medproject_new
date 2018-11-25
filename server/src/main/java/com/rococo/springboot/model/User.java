@@ -8,7 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,6 +27,7 @@ import org.hibernate.validator.constraints.Length;
 public class User implements Serializable {
 
 	public User() {
+        this.modificationDate = new Date();
 	};
 
 	public User(Integer id, @NotEmpty String email,
@@ -32,6 +36,7 @@ public class User implements Serializable {
 			@NotNull @NotEmpty @Size(min = 2, message = "First Name should at least have 2 characters") @Size(max = 15, message = "FirstName should not exceed 15 characters") String firstName,
 			@NotNull @NotEmpty @Size(min = 2, message = "Last Name should at least have 2 characters") @Size(max = 15, message = "Last Name should not exceed 15 characters") String lastName) {
 		super();
+        this.modificationDate = new Date();
 		this.id = id;
 		this.email = email;
 		this.username = username;
@@ -44,6 +49,7 @@ public class User implements Serializable {
 			@NotEmpty @Size(min = 2, message = "Username should at least have 2 characters") @Size(max = 15, message = "Username should not exceed 15 characters") String username,
 			@NotEmpty @Size(min = 2, message = "Password should at least have 2 characters") @Size(max = 15, message = "Password should not exceed 15 characters") String password) {
 		super();
+        this.modificationDate = new Date();
 		this.username = username;
 		this.password = password;
 	}
@@ -81,10 +87,12 @@ public class User implements Serializable {
 	private String lastName;
         
         @Column(name = "creation", updatable=false)
+        @Temporal(javax.persistence.TemporalType.DATE)
         private Date creationDate = new Date();
         
         @Column(name = "modification")
-        private Date modificationDate = new Date();
+        @Temporal(javax.persistence.TemporalType.DATE)
+        private Date modificationDate;
         
         @NotNull
 	@NotEmpty
@@ -158,6 +166,12 @@ public class User implements Serializable {
         public void setModificationDate(Date modificationDate) {
             this.modificationDate = modificationDate;
         }
+        
+
+	@PreUpdate
+	protected void onPersist() {
+		this.setModificationDate(new Date());
+	}
 
         public Integer getKey() {
             return key;
