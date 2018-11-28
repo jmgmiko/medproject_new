@@ -67,14 +67,11 @@ public class MedicalRecordModel implements Serializable {
         }
         
         @Column(name = "admission", updatable=false)
-        @Temporal(javax.persistence.TemporalType.DATE)
         private final Date admissionDate = new Date();
         
         @Column(name = "discharge")
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date dischargeDate = new Date();
         
-        @PreUpdate
         public void setDischarge() {  this.dischargeDate = new Date(); }
 
         public Date getAdmissionDate() {
@@ -85,7 +82,6 @@ public class MedicalRecordModel implements Serializable {
             return dischargeDate;
         }     
         
-        @NotNull
 	@NotEmpty
         @Size(min=1, message="List should at least have 1 symptom")
         @ElementCollection
@@ -119,29 +115,7 @@ public class MedicalRecordModel implements Serializable {
             this.disease.retainAll(disease);
             this.disease.addAll(disease);
         }      
-        
-        
-//        public void addMedicine(MedicineModel med) {
-//            RecordMedicineAssoc give = new RecordMedicineAssoc(this, med);
-//            medicine.add(give);
-//            med.getRecords().add(give);
-//        }
-
-//        public void removeTag(MedicineModel med) {
-//            for (Iterator<RecordMedicineAssoc> iterator = medicine.iterator(); 
-//                 iterator.hasNext(); ) {
-//                RecordMedicineAssoc some = iterator.next();
-//
-//                if (some.getMed().equals(med) &&
-//                        some.getRecord().equals(this)) {
-//                    iterator.remove();
-//                    some.getMed().getRecords().remove(some);
-//                    some.setMed(null);
-//                    some.setRecord(null);
-//                }
-//            }
-//        }
-
+       
         public List<RecordMedicineAssoc> getMedicine() {
             return medicine;
         }     
@@ -161,6 +135,7 @@ public class MedicalRecordModel implements Serializable {
         
         @NotNull
 	@NotEmpty
+        @Column(name = "model_lkey")
         private Integer key;
 
         @Override
@@ -177,7 +152,6 @@ public class MedicalRecordModel implements Serializable {
         }
         
         @Column(name = "creation", updatable=false)
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date creationDate = new Date();
 
         public Date getCreationDate() {
@@ -189,7 +163,6 @@ public class MedicalRecordModel implements Serializable {
         }       
         
         @Column(name = "modification")
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date modificationDate = new Date();
 
         public Date getModificationDate() {
@@ -203,12 +176,12 @@ public class MedicalRecordModel implements Serializable {
         @PrePersist
 	protected void onCreate() {
 		this.setCreationDate(new Date());
+                this.setKey();
 	}
 
 	@PreUpdate
 	protected void onPersist() {
 		this.setModificationDate(new Date());
 	}
-        
 }
 

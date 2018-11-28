@@ -27,7 +27,8 @@ public class MedicalRecordServiceImpl {
         
 
 	public MedicalRecordModel getMedicalRecordInfo(int given) {
-            return medRecordRepository.findById(given).get();
+            MedicalRecordModel result = medRecordRepository.findById(given).get();
+            return result;
 	}
         
         public void removeMedicalRecordInfo(MedicalRecordModel medicine){

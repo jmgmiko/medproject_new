@@ -32,6 +32,21 @@ public class MedicineModel implements Serializable {
 //        )
 //        private List<RecordMedicineAssoc> records;
 
+        public MedicineModel(
+                Integer id, 
+                @NotNull @NotEmpty @Length(min=1, message="Name should at least have 1 character") @Length(max=30, message="Name should at least have 30 characters") String name, 
+                @NotNull double price, 
+                String manuf) {
+            super();
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.manuf = manuf;
+        }
+
+        public MedicineModel() {
+        }            
+
 	@NotNull
 	@NotEmpty
         @Length(min=1, message="Name should at least have 1 character")
@@ -40,21 +55,17 @@ public class MedicineModel implements Serializable {
 	private String name;
         
         @NotNull
-        @NotEmpty
         private double price;
 
 	private String manuf;
-        
-        @NotNull
-	@NotEmpty
+       
+        @Column(name = "model_lkey")
         private Integer key;
         
         @Column(name = "creation", updatable=false)
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date creationDate = new Date();
         
         @Column(name = "modification")
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date modificationDate;
 
         public Integer getId() {
@@ -143,11 +154,15 @@ public class MedicineModel implements Serializable {
             this.modificationDate = modificationDate;
         }
 
+	@PrePersist
+	protected void onCreate() {
+		this.setCreationDate(new Date());
+                this.setKey();
+	}
+
 	@PreUpdate
 	protected void onPersist() {
 		this.setModificationDate(new Date());
-                this.setKey();
 	}
-        
         
 }

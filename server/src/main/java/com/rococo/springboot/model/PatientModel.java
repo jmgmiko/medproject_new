@@ -47,14 +47,13 @@ public class PatientModel implements Serializable {
         
         @NotNull
 	@NotEmpty
+        @Column(name = "model_lkey")
         private Integer key;
         
         @Column(name = "creation", updatable=false)
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date creationDate = new Date();
         
         @Column(name = "modification")
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date modificationDate = new Date();
 
         public Integer getId() {
@@ -117,6 +116,12 @@ public class PatientModel implements Serializable {
         public void setModificationDate(Date modificationDate) {
             this.modificationDate = modificationDate;
         }      
+
+	@PrePersist
+	protected void onCreate() {
+		this.setCreationDate(new Date());
+                this.setKey();
+	}
 
 	@PreUpdate
 	protected void onPersist() {

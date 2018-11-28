@@ -1,5 +1,6 @@
 package com.rococo.springboot.model;
 
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -44,15 +45,12 @@ public class DiseaseModel implements Serializable {
 	private List<MedicineModel> meds;
         
         @Column(name = "creation", updatable=false)
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date creationDate = new Date();
         
         @Column(name = "modification")
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date modificationDate = new Date();
         
-        @NotNull
-	@NotEmpty
+        @Column(name = "model_key")
         private Integer key;
 
 	public Integer getId() {

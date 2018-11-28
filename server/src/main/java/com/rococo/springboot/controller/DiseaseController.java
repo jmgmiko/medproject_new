@@ -50,7 +50,7 @@ public class DiseaseController {
         return given.getId()+" deleted";
     }
     
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/name", method = RequestMethod.GET)
     public DiseaseModel findByName(@RequestParam("name") String given){
         return medicine.getDiseaseByName(given);
     }

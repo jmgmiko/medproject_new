@@ -29,16 +29,16 @@ import javax.validation.constraints.NotNull;
  * @author UESR
  */
 @Entity // This tells Hibernate to make a table out of this class
-@Table(name="disease_medicine") // This tells Hibernate to name the table as Person and not PersonModel
+@Table(name="record_association") // This tells Hibernate to name the table as Person and not PersonModel
 public class RecordMedicineAssoc implements Serializable {
     @EmbeddedId
     private RecordMedicineId id;
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "record_entity")
     private MedicalRecordModel record;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "med_entity")
     private MedicineModel med;
     

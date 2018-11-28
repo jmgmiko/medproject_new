@@ -87,15 +87,14 @@ public class User implements Serializable {
 	private String lastName;
         
         @Column(name = "creation", updatable=false)
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date creationDate = new Date();
         
         @Column(name = "modification")
-        @Temporal(javax.persistence.TemporalType.DATE)
         private Date modificationDate;
         
         @NotNull
 	@NotEmpty
+        @Column(name = "model_lkey")
         private Integer key;
 
 	public Integer getId() {
@@ -167,6 +166,12 @@ public class User implements Serializable {
             this.modificationDate = modificationDate;
         }
         
+
+	@PrePersist
+	protected void onCreate() {
+		this.setCreationDate(new Date());
+                this.setKey();
+	}
 
 	@PreUpdate
 	protected void onPersist() {
