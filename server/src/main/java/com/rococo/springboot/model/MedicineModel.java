@@ -116,8 +116,7 @@ public class MedicineModel implements Serializable {
                 result = false;
             } else {
                 MedicineModel med = (MedicineModel) object;
-                return this.name.equals(med.getName())&&this.manuf.equals(med.getManuf())
-                        &&this.price==med.getPrice();
+                return this.id == med.id && this.key == med.key;
             }
             return result;
         }        

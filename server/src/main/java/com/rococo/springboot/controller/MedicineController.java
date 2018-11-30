@@ -40,8 +40,9 @@ public class MedicineController {
     
     @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String updateMed(@RequestBody MedicineModel given) {
-        medicine.updateMedicine(given);
-        return "Saved";
+        boolean go = medicine.updateMedicine(given);
+        String result = (go==false)? "Saved":"Not saved";
+        return result;
     }
     
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)

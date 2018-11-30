@@ -61,24 +61,27 @@ public class MedicineServiceImpl implements MedicineService {
             }
 	}
         
-	public void updateMedicine(MedicineModel patientModel) {
+	public boolean updateMedicine(MedicineModel patientModel) {
                 boolean found = this.ifFound(patientModel);
                 if (found == false) {
                     patientRepository.save(patientModel);
-                }		
+                }	
+                return found;
 	}
         
         private boolean ifFound(MedicineModel patientModel){
             List<DiseaseModel> all = diseaseRepository.findAll();
             boolean found = false;
             for (int x=0; x<all.size(); x++) {
-                if (all.get(x).getMeds().contains(patientModel)) {
-                    found = true;
-                    break;
+                for (MedicineModel op:all.get(x).getMeds()) {
+                    if (op.equals(patientModel)) {
+                        found = true;
+                        break;
+                    }                    
                 }
             }
             List <RecordMedicineAssoc> other = recAssocRepository.findAll();
-            for (int x=0; x<all.size(); x++) {
+            for (int x=0; x<other.size(); x++) {
                 if (other.get(x).getMed().equals(other)) {
                     found = true;
                     break;

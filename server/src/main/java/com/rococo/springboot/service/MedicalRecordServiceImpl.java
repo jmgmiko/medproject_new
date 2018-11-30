@@ -68,13 +68,13 @@ public class MedicalRecordServiceImpl {
 	}
         
         public void updateMedicine(MedicalRecordModel medRecordModel) {
-                List<DiseaseModel> disease = medRecordModel.getDisease();
-                for (int x=0; x<disease.size(); x++) {
-                    for (MedicineModel pop : disease.get(x).getMeds()) {                         
-//                        recordMedicineRepository.save(pop);
-                    }
-                }
-		medRecordRepository.save(medRecordModel);
+//                List<DiseaseModel> disease = medRecordModel.getDisease();
+//                for (int x=0; x<disease.size(); x++) {
+//                    for (MedicineModel pop : disease.get(x).getMeds()) {                         
+////                        recordMedicineRepository.save(pop);
+//                    }
+//                }
+//		medRecordRepository.save(medRecordModel);
 	}
 
 }

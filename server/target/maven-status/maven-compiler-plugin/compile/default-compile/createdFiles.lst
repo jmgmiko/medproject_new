@@ -14,7 +14,6 @@ com\rococo\springboot\exception\StudentNotFoundException.class
 com\rococo\springboot\service\MedicineServiceImpl.class
 com\rococo\springboot\exception\UserNotFoundException.class
 com\rococo\springboot\model\RecordMedicineAssoc.class
-com\rococo\springboot\service\MedicalRecordServiceImpl.class
 com\rococo\springboot\service\PatientService.class
 com\rococo\springboot\service\MedicineService.class
 com\rococo\springboot\model\User.class
