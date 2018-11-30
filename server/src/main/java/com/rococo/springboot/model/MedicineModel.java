@@ -59,6 +59,7 @@ public class MedicineModel implements Serializable {
 
 	private String manuf;
        
+        @NotNull
         @Column(name = "model_lkey")
         private Integer key;
         
@@ -66,7 +67,7 @@ public class MedicineModel implements Serializable {
         private Date creationDate = new Date();
         
         @Column(name = "modification")
-        private Date modificationDate;
+        private Date modificationDate = new Date();
 
         public Integer getId() {
             return id;

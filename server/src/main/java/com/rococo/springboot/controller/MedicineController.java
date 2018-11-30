@@ -40,7 +40,7 @@ public class MedicineController {
     
     @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String updateMed(@RequestBody MedicineModel given) {
-        medicine.registerMedicine(given);
+        medicine.updateMedicine(given);
         return "Saved";
     }
     

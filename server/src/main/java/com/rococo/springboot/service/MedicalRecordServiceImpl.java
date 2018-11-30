@@ -32,20 +32,19 @@ public class MedicalRecordServiceImpl {
 	}
         
         public void removeMedicalRecordInfo(MedicalRecordModel medicine){
-            for (Iterator<RecordMedicineAssoc> iterator = medicine.getMedicine().iterator(); 
-                 iterator.hasNext(); ) {
-                RecordMedicineAssoc some = iterator.next();
-                List<DiseaseModel> disease = medicine.getDisease();
-                for (int x=0; x<disease.size(); x++) {
-                    for (MedicineModel pop : disease.get(x).getMeds()) {
-                        if (some.getMed().equals(pop) &&
-                            some.getRecord().equals(medicine)) {
-                            iterator.remove();
-                            recordMedicineRepository.delete(some);
-                        }
-                    }
-                }
-            }
+//            for (Record) {
+//                RecordMedicineAssoc some = iterator.next();
+//                List<DiseaseModel> disease = medicine.getDisease();
+//                for (int x=0; x<disease.size(); x++) {
+//                    for (MedicineModel pop : disease.get(x).getMeds()) {
+//                        if (some.getMed().equals(pop) &&
+//                            some.getRecord().equals(medicine)) {
+//                            iterator.remove();
+//                            recordMedicineRepository.delete(some);
+//                        }
+//                    }
+//                }
+//            }
             medRecordRepository.deleteById(medicine.getId());
         }
         
@@ -60,22 +59,19 @@ public class MedicalRecordServiceImpl {
 	 * @see com.rococo.springboot.service.PersonService#registerPerson(com.rococo.springboot.model.MedicalRecordModel)
 	 */
 	public void registerMedicine(MedicalRecordModel medRecordModel) {
-                List<DiseaseModel> disease = medRecordModel.getDisease();
-                for (int x=0; x<disease.size(); x++) {
-                    for (MedicineModel pop : disease.get(x).getMeds()) {                        
+                DiseaseModel disease = medRecordModel.getDisease();
+                    for (MedicineModel pop : disease.getMeds()) {                        
                         RecordMedicineAssoc give = new RecordMedicineAssoc(medRecordModel, pop);                        
-                        medRecordModel.getMedicine().add(give); 
                         recordMedicineRepository.save(give);
                     }
-                }
 		medRecordRepository.save(medRecordModel);
 	}
         
         public void updateMedicine(MedicalRecordModel medRecordModel) {
                 List<DiseaseModel> disease = medRecordModel.getDisease();
                 for (int x=0; x<disease.size(); x++) {
-                    for (RecordMedicineAssoc pop : medRecordModel.getMedicine()) {                         
-                        recordMedicineRepository.save(pop);
+                    for (MedicineModel pop : disease.get(x).getMeds()) {                         
+//                        recordMedicineRepository.save(pop);
                     }
                 }
 		medRecordRepository.save(medRecordModel);

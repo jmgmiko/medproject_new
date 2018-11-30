@@ -36,17 +36,28 @@ public class PatientModel implements Serializable {
 	private String name;        
         
         @NotNull
-        @NotEmpty
-        @Temporal(TemporalType.TIMESTAMP)
+        @Temporal(TemporalType.DATE)
         @Column(unique=true)
         private Date birth;
 
         @NotNull
         @NotEmpty
 	private String sex;
+
+        public PatientModel(
+                Integer id, 
+                @NotNull @NotEmpty @Length(min=1, message="Name should at least have 1 character") @Length(max=254, message="Name should at least have 254 characters") String name, 
+                @NotNull @NotEmpty String sex) {
+            super();
+            this.id = id;
+            this.name = name;
+            this.sex = sex;
+        }
+
+        public PatientModel() {
+        }                
         
         @NotNull
-	@NotEmpty
         @Column(name = "model_lkey")
         private Integer key;
         
@@ -127,5 +138,17 @@ public class PatientModel implements Serializable {
 	protected void onPersist() {
 		this.setModificationDate(new Date());
 	}
-                
+        
+        @Override
+        public boolean equals (Object object) {
+            boolean result = false;
+            if (object == null || object.getClass() != getClass()) {
+                result = false;
+            } else {
+                PatientModel med = (PatientModel) object;
+                return this.name.equals(med.getName())&&this.birth.equals(med.getBirth())
+                        &&this.sex.equals(med.getSex());
+            }
+            return result;
+        }  
 }

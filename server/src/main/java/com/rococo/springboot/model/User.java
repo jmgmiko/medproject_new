@@ -93,7 +93,6 @@ public class User implements Serializable {
         private Date modificationDate;
         
         @NotNull
-	@NotEmpty
         @Column(name = "model_lkey")
         private Integer key;
 

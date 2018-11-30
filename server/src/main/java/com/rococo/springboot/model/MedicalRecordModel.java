@@ -42,7 +42,7 @@ public class MedicalRecordModel implements Serializable {
 
 	@NotNull
 	@NotEmpty
-        @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+        @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
         @JoinColumn(name = "patient_id")
 	private PatientModel patient;
 
@@ -93,37 +93,17 @@ public class MedicalRecordModel implements Serializable {
 
         public void setSymptoms(List<String> symptoms) {
             this.symptoms = symptoms;
-        }
-     
-        @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-        )
-        private List<RecordMedicineAssoc> medicine;
+        }        
         
-        @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-        )
-        private List<DiseaseModel> disease;
+        private DiseaseModel disease;
 
-        public List<DiseaseModel> getDisease() {
+        public DiseaseModel getDisease() {
             return disease;
         }
 
-        public void setDisease(List<DiseaseModel> disease) {
-            this.disease.retainAll(disease);
-            this.disease.addAll(disease);
+        public void setDisease(DiseaseModel disease) {
+            this.disease = disease;
         }      
-       
-        public List<RecordMedicineAssoc> getMedicine() {
-            return medicine;
-        }     
-        
-        public void setMedicine(List<RecordMedicineAssoc> meds) {
-            this.medicine.retainAll(meds);
-            this.medicine.addAll(meds);
-        }
         
         @Override
         public boolean equals(Object o) {
@@ -134,13 +114,12 @@ public class MedicalRecordModel implements Serializable {
         }
         
         @NotNull
-	@NotEmpty
         @Column(name = "model_lkey")
         private Integer key;
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, total, patient, admissionDate, dischargeDate, medicine, symptoms);
+            return Objects.hash(id, total, patient, admissionDate, dischargeDate, symptoms);
         }
 
         public Integer getKey() {

@@ -7,7 +7,6 @@ com\rococo\springboot\controller\MedicalRecordController.class
 com\rococo\springboot\controller\PatientController.class
 com\rococo\springboot\controller\DiseaseController.class
 com\rococo\springboot\controller\HomeController.class
-com\rococo\springboot\model\DiseaseModel.class
 com\rococo\springboot\controller\UserController.class
 com\rococo\springboot\repository\MedicineRepository.class
 com\rococo\springboot\model\MedicalRecordModel.class

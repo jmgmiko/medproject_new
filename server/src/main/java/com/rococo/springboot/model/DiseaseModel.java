@@ -2,6 +2,7 @@ package com.rococo.springboot.model;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,8 +42,8 @@ public class DiseaseModel implements Serializable {
         @NotNull
 	@NotEmpty
         @Size(min=1, message="List should at least have 1 medicine")
-        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<MedicineModel> meds;
+        @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true)
+	private List<MedicineModel> meds = new ArrayList<MedicineModel>();
         
         @Column(name = "creation", updatable=false)
         private Date creationDate = new Date();
@@ -50,8 +51,24 @@ public class DiseaseModel implements Serializable {
         @Column(name = "modification")
         private Date modificationDate = new Date();
         
+        @NotNull
         @Column(name = "model_key")
         private Integer key;
+
+        public DiseaseModel(
+                Integer id, 
+                @NotNull @NotEmpty @Size(min=1, message="Name should at least have 1 character") @Size(max=30, message="Name should at least have 30 characters")String name, 
+                @NotNull @NotEmpty @Size(min=1, message="List should at least have 1 medicine") List<MedicineModel> meds) {
+            super();
+            this.id = id;
+            this.name = name;
+            this.meds = meds;
+        }
+
+    public DiseaseModel() {
+    }
+        
+        
 
 	public Integer getId() {
 		return id;
@@ -124,11 +141,11 @@ public class DiseaseModel implements Serializable {
         @PrePersist
 	protected void onCreate() {
 		this.setCreationDate(new Date());
+                this.setKey();
 	}
 
 	@PreUpdate
 	protected void onPersist() {
 		this.setModificationDate(new Date());
-                this.setKey();
 	}
 }

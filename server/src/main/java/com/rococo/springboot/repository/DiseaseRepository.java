@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface DiseaseRepository extends CrudRepository<DiseaseModel, Integer>{
+public interface DiseaseRepository extends JpaRepository<DiseaseModel, Integer>{
     @Query("SELECT u FROM DiseaseModel u WHERE u.name = (:name)")
     DiseaseModel findDiseaseByName(@Param("name") String given);
 }
