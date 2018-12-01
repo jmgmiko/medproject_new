@@ -10,5 +10,6 @@ import com.rococo.springboot.model.UserAbility;
 
 @Repository
 public interface UserAbilityRepository extends JpaRepository<UserAbility, Integer> {
-
+        @Query("SELECT u.position FROM UserAbility u  WHERE u.user=:given")
+	String findUserAbility(@Param("given") User some);
 }

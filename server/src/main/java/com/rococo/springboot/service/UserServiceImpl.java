@@ -12,6 +12,7 @@ import com.rococo.springboot.model.User;
 import com.rococo.springboot.model.UserAbility;
 import com.rococo.springboot.repository.UserAbilityRepository;
 import com.rococo.springboot.repository.UserRepository;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,7 +35,11 @@ public class UserServiceImpl implements UserService {
 		User user =  userRepository.findUserByUsernamePassword(username,password);
 		return user;
 	}
-
+        
+        public String getUserRole(User given) {
+            return userAbilityRepository.findUserAbility(given);
+        }
+        
 	@Override
 	public List<User> getAll() {
 		List<User> list = new ArrayList<>();
@@ -50,5 +55,9 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(UserModel);
                 userAbilityRepository.save(new UserAbility(UserModel, "doctor"));
 	}
+        
+        public User findById(Integer given) {
+            return userRepository.findUserById(given);
+        }
 
 }

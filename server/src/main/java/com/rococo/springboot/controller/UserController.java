@@ -10,6 +10,7 @@ package com.rococo.springboot.controller;
  * @author staff
  */
 import com.rococo.springboot.model.User;
+import com.rococo.springboot.model.UserAbility;
 import com.rococo.springboot.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +52,12 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)    
     public User findUser (@RequestBody User given) {
         return medicine.getPersonByUsernamePassword(given.getUsername(), given.getPassword());
+    }
+    
+    @RequestMapping(value = "/role", method = RequestMethod.GET)    
+    public String findUserRole (@RequestParam("id") Integer given) {
+        User spot = medicine.findById(given);
+        return medicine.getUserRole(spot);
     }
        
 }
