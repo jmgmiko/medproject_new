@@ -36,7 +36,7 @@ public class DiseaseModel implements Serializable {
 	@NotEmpty
         @Size(min=1, message="Name should at least have 1 character")
         @Size(max=30, message="Name should at least have 30 characters")
-        @Column(unique=true)
+        @Column(unique=true, updatable=false)
 	private String name;
 
         @NotNull
@@ -102,7 +102,7 @@ public class DiseaseModel implements Serializable {
                 result = false;
             } else {
                 DiseaseModel med = (DiseaseModel) object;
-                return this.name.equals(med.getName())&&this.meds.equals(med.getMeds());
+                return this.name.equals(med.getName())&&this.id==med.getId();
             }
             return result;
         }

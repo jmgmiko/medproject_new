@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
@@ -45,10 +46,15 @@ public class UserAbility implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
         @Column(name = "updated_at", nullable = false)
         @LastModifiedDate
-        private Date updatedAt;
+        private Date updatedAt = new Date();
         
         @NotNull
         @NotEmpty
         private String position;
+        
+        @PreUpdate
+	protected void onPersist() {
+		this.updatedAt=new Date();
+	}
 
 }

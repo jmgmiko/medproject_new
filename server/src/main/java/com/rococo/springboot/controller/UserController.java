@@ -32,7 +32,7 @@ public class UserController {
     @Autowired
     UserServiceImpl medicine;
     
-    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String updateUser(@RequestBody User given) {
         return "Saved";
     }
@@ -40,6 +40,17 @@ public class UserController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Collection<User> findAll(){
         return (Collection<User>) medicine.getAll();
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String registerUser(@RequestBody User given) {
+        medicine.registerPerson(given);
+        return "Saved";
+    }
+    
+    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)    
+    public User findUser (@RequestBody User given) {
+        return medicine.getPersonByUsernamePassword(given.getUsername(), given.getPassword());
     }
        
 }
