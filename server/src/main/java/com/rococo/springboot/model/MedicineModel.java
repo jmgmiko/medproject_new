@@ -112,11 +112,11 @@ public class MedicineModel implements Serializable {
         @Override
         public boolean equals (Object object) {
             boolean result = false;
-            if (object == null || object.getClass() != getClass()) {
+            if (object == null || object.getClass() != this.getClass()) {
                 result = false;
             } else {
                 MedicineModel med = (MedicineModel) object;
-                return this.id == med.id && this.key == med.key;
+                return this.id == med.id;
             }
             return result;
         }        

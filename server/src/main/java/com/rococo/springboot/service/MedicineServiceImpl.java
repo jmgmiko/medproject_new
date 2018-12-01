@@ -79,7 +79,7 @@ public class MedicineServiceImpl implements MedicineService {
                         break;
                     }                    
                 }
-            }
+            }                    
             List <RecordMedicineAssoc> other = recAssocRepository.findAll();
             for (int x=0; x<other.size(); x++) {
                 if (other.get(x).getMed().equals(other)) {
