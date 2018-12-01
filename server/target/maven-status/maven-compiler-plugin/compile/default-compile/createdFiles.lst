@@ -9,7 +9,6 @@ com\rococo\springboot\controller\DiseaseController.class
 com\rococo\springboot\controller\HomeController.class
 com\rococo\springboot\controller\UserController.class
 com\rococo\springboot\repository\MedicineRepository.class
-com\rococo\springboot\model\MedicalRecordModel.class
 com\rococo\springboot\exception\StudentNotFoundException.class
 com\rococo\springboot\service\MedicineServiceImpl.class
 com\rococo\springboot\exception\UserNotFoundException.class

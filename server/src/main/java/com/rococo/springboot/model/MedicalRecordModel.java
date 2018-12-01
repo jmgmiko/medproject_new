@@ -20,6 +20,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,7 +42,6 @@ public class MedicalRecordModel implements Serializable {
 	}
 
 	@NotNull
-	@NotEmpty
         @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
         @JoinColumn(name = "patient_id")
 	private PatientModel patient;
@@ -55,7 +55,6 @@ public class MedicalRecordModel implements Serializable {
         }
 
 	@NotNull
-	@NotEmpty
 	private Double total;
 
         public Double getTotal() {
@@ -67,10 +66,12 @@ public class MedicalRecordModel implements Serializable {
         }
         
         @Column(name = "admission", updatable=false)
-        private final Date admissionDate = new Date();
+        @Temporal(TemporalType.DATE)
+        private Date admissionDate;
         
         @Column(name = "discharge")
-        private Date dischargeDate = new Date();
+        @Temporal(TemporalType.DATE)
+        private Date dischargeDate = null;
         
         public void setDischarge() {  this.dischargeDate = new Date(); }
 
@@ -95,6 +96,8 @@ public class MedicalRecordModel implements Serializable {
             this.symptoms = symptoms;
         }        
         
+        @ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "disease_id", nullable = false)
         private DiseaseModel disease;
 
         public DiseaseModel getDisease() {
@@ -156,6 +159,7 @@ public class MedicalRecordModel implements Serializable {
 	protected void onCreate() {
 		this.setCreationDate(new Date());
                 this.setKey();
+                this.setTotal(0.0);
 	}
 
 	@PreUpdate

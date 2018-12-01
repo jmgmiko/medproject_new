@@ -44,12 +44,14 @@ public class RecordMedicineAssoc implements Serializable {
     
     @Column(name = "created_on")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date createdOn = new Date();
+    private Date createdOn = null;
     
-    @NotEmpty
     @NotNull
     private Integer count;
 
+    public RecordMedicineAssoc() {
+    }    
+    
     public RecordMedicineAssoc(MedicalRecordModel record, MedicineModel med) {
         this.record = record;
         this.med = med;
@@ -105,5 +107,10 @@ public class RecordMedicineAssoc implements Serializable {
     public int hashCode() {
         return Objects.hash(record, med);
     }
+    
+    @PrePersist
+	protected void onCreate() {
+		this.createdOn=new Date();
+	}
     
 }

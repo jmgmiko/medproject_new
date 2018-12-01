@@ -60,11 +60,11 @@ public class MedicalRecordServiceImpl {
 	 */
 	public void registerMedicine(MedicalRecordModel medRecordModel) {
                 DiseaseModel disease = medRecordModel.getDisease();
+                medRecordRepository.save(medRecordModel);
                     for (MedicineModel pop : disease.getMeds()) {                        
                         RecordMedicineAssoc give = new RecordMedicineAssoc(medRecordModel, pop);                        
                         recordMedicineRepository.save(give);
-                    }
-		medRecordRepository.save(medRecordModel);
+                    }		
 	}
         
         public void updateMedicine(MedicalRecordModel medRecordModel) {
